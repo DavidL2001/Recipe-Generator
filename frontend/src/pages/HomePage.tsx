@@ -1,8 +1,16 @@
+import { Link } from "react-router-dom";
+
 const HomePage = () => {
   return (
     <div className="home-page">
       <h1>🍳 Lindströms Recept-Generator</h1>
-      <p>Module 1 setup complete. Ready for Module 2.</p>
+      <button>
+        <h1>
+        <Link to="/register">
+            Börja med att skapa ett konto!
+          </Link>
+          </h1>
+      </button>
     </div>
   );
 };
