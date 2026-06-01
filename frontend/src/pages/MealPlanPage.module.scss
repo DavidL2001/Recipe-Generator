@@ -1,0 +1,845 @@
+@use '../styles/variables' as *;
+
+// ── Page ─────────────────────────────────────────────────
+
+.page {
+  min-height: 100vh;
+  background: $color-bg;
+  color: $color-text;
+  font-family: $font-body;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-4 $space-8;
+  border-bottom: 1px solid $color-border;
+  background: $color-surface;
+
+  .logo {
+    font-family: $font-display;
+    font-size: 1.2rem;
+    color: $color-accent;
+  }
+
+  .nav {
+    display: flex;
+    gap: $space-3;
+    align-items: center;
+
+    a, button {
+      background: none;
+      border: none;
+      color: $color-text-muted;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: $space-2 $space-3;
+      border-radius: $radius-sm;
+      transition: color $transition-fast;
+      text-decoration: none;
+
+      &:hover { color: $color-text; }
+      &.active { color: $color-accent; }
+    }
+  }
+}
+
+.main {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: $space-8;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: $space-8;
+  align-items: start;
+
+  @media (max-width: $bp-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ── Sidebar ───────────────────────────────────────────────
+
+.sidebar {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: $space-5;
+}
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $space-5;
+
+  h2 {
+    font-family: $font-display;
+    font-size: 1.2rem;
+    margin: 0;
+    color: $color-text;
+  }
+}
+
+.newPlanBtn {
+  background: $color-accent;
+  border: none;
+  border-radius: $radius-md;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: $space-2 $space-3;
+  cursor: pointer;
+  transition: opacity $transition-fast;
+  font-family: $font-body;
+
+  &:hover { opacity: 0.85; }
+}
+
+.planList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+// ── Plan Card ─────────────────────────────────────────────
+
+.planCard {
+  background: $color-surface-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: $space-4;
+  cursor: pointer;
+  transition: border-color $transition-fast;
+
+  &:hover { border-color: rgba($color-accent, 0.5); }
+  &.selected { border-color: $color-accent; }
+}
+
+.planCardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $space-2;
+}
+
+.planTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 $space-1;
+  color: $color-text;
+  font-family: $font-display;
+}
+
+.planDates {
+  font-size: 0.8rem;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+.planStats {
+  margin-top: $space-3;
+  font-size: 0.8rem;
+  color: $color-text-muted;
+}
+
+.deletePlanBtn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.4;
+  transition: opacity $transition-fast;
+  flex-shrink: 0;
+
+  &:hover { opacity: 1; }
+}
+
+// ── New Plan Form ─────────────────────────────────────────
+
+.newPlanForm {
+  background: $color-surface-2;
+  border: 1px solid rgba($color-accent, 0.3);
+  border-radius: $radius-md;
+  padding: $space-4;
+  margin-bottom: $space-4;
+
+  h3 {
+    font-family: $font-display;
+    font-size: 1rem;
+    margin: 0 0 $space-4;
+    color: $color-text;
+  }
+}
+
+.formLabel {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $color-text-muted;
+  margin-bottom: $space-2;
+}
+
+.formInput {
+  width: 100%;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text;
+  padding: $space-2 $space-3;
+  font-size: 0.88rem;
+  font-family: $font-body;
+  margin-bottom: $space-4;
+  box-sizing: border-box;
+
+  &:focus { outline: none; border-color: $color-accent; }
+  &[type="date"] { cursor: pointer; }
+}
+
+.formActions {
+  display: flex;
+  gap: $space-2;
+  justify-content: flex-end;
+}
+
+.cancelBtn {
+  background: none;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text-muted;
+  padding: $space-2 $space-3;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: $font-body;
+
+  &:hover { border-color: $color-text-muted; color: $color-text; }
+}
+
+.createBtn {
+  background: $color-accent;
+  border: none;
+  border-radius: $radius-md;
+  color: #fff;
+  padding: $space-2 $space-4;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: $font-body;
+
+  &:hover:not(:disabled) { opacity: 0.9; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+// ── Content area ──────────────────────────────────────────
+
+.content {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: $space-6;
+  min-height: 500px;
+}
+
+.contentHeader {
+  margin-bottom: $space-6;
+
+  h2 {
+    font-family: $font-display;
+    font-size: 1.5rem;
+    margin: 0 0 $space-1;
+    color: $color-text;
+  }
+}
+
+.contentDates {
+  font-size: 0.85rem;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+.contentEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  text-align: center;
+  color: $color-text-muted;
+}
+
+.contentEmptyIcon {
+  font-size: 4rem;
+  margin-bottom: $space-4;
+}
+
+.ctaBtn {
+  background: $color-accent;
+  border: none;
+  border-radius: $radius-md;
+  color: #fff;
+  padding: $space-3 $space-6;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: $space-5;
+  font-family: $font-body;
+  transition: opacity $transition-fast;
+
+  &:hover { opacity: 0.9; }
+}
+
+// ── Week Grid ─────────────────────────────────────────────
+
+.weekGrid {
+  display: grid;
+  // 1 label column + 7 day columns
+  grid-template-columns: 90px repeat(7, 1fr);
+  gap: 4px;
+  overflow-x: auto;
+}
+
+.gridCorner {
+  // empty top-left cell
+}
+
+.gridDayHeader {
+  text-align: center;
+  padding: $space-2;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  .dayShort { display: block; }
+  .dayFull  { display: none; }
+
+  @media (min-width: $bp-xl) {
+    .dayShort { display: none; }
+    .dayFull  { display: block; }
+  }
+}
+
+.mealTypeLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: $space-2;
+  font-size: 0.72rem;
+  color: $color-text-muted;
+  text-transform: capitalize;
+  font-weight: 600;
+
+  span:first-child { font-size: 1.1rem; }
+}
+
+.gridCell {
+  min-height: 72px;
+  border-radius: $radius-md;
+  transition: background $transition-fast;
+}
+
+.emptyCell {
+  background: $color-surface-2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover { background: $color-border; }
+}
+
+.filledCell {
+  background: rgba($color-accent, 0.08);
+  border: 1px solid rgba($color-accent, 0.2);
+}
+
+.addSlotBtn {
+  background: none;
+  border: none;
+  color: $color-text-muted;
+  font-size: 1.3rem;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  min-height: 72px;
+  opacity: 0.4;
+  transition: opacity $transition-fast;
+  border-radius: $radius-md;
+
+  &:hover { opacity: 1; }
+}
+
+.slotCard {
+  display: flex;
+  flex-direction: column;
+  padding: $space-2;
+  height: 100%;
+  min-height: 72px;
+  position: relative;
+}
+
+.slotTitle {
+  font-size: 0.76rem;
+  color: $color-text;
+  line-height: 1.3;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.removeSlotBtn {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  background: rgba($color-bg, 0.7);
+  border: none;
+  border-radius: 50%;
+  color: $color-text-muted;
+  font-size: 0.65rem;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity $transition-fast;
+
+  .slotCard:hover & { opacity: 1; }
+  &:hover { color: $color-error; }
+}
+
+// ── Recipe Picker Modal ───────────────────────────────────
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: $space-4;
+}
+
+.modal {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  width: 100%;
+  max-width: 480px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $space-5 $space-5 $space-4;
+  border-bottom: 1px solid $color-border;
+
+  h3 {
+    font-family: $font-display;
+    font-size: 1.1rem;
+    margin: 0;
+    color: $color-text;
+    text-transform: capitalize;
+  }
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: $color-text-muted;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+
+  &:hover { color: $color-text; }
+}
+
+.pickerSearch {
+  background: $color-surface-2;
+  border: none;
+  border-bottom: 1px solid $color-border;
+  color: $color-text;
+  padding: $space-3 $space-5;
+  font-size: 0.9rem;
+  font-family: $font-body;
+  width: 100%;
+  box-sizing: border-box;
+
+  &::placeholder { color: $color-text-muted; }
+  &:focus { outline: none; }
+}
+
+.pickerList {
+  overflow-y: auto;
+  flex: 1;
+  padding: $space-2 0;
+}
+
+.pickerItem {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: $space-3 $space-5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-4;
+  cursor: pointer;
+  font-family: $font-body;
+  transition: background $transition-fast;
+
+  &:hover { background: $color-surface-2; }
+}
+
+.pickerItemTitle {
+  font-size: 0.9rem;
+  color: $color-text;
+  text-align: left;
+}
+
+.pickerItemMeta {
+  font-size: 0.8rem;
+  color: $color-text-muted;
+  flex-shrink: 0;
+}
+
+.pickerEmpty {
+  padding: $space-8 $space-5;
+  text-align: center;
+  font-size: 0.9rem;
+  color: $color-text-muted;
+}
+
+// ── Shared states ─────────────────────────────────────────
+
+.empty {
+  text-align: center;
+  padding: $space-10 $space-4;
+  color: $color-text-muted;
+
+  .emptyIcon { font-size: 2.5rem; margin-bottom: $space-3; }
+  p { font-size: 0.88rem; line-height: 1.6; }
+}
+
+.loadingRow {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-6 0;
+  color: $color-text-muted;
+  font-size: 0.9rem;
+
+  .loadSpinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid $color-border;
+    border-top-color: $color-accent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+}
+
+.errorBanner {
+  background: rgba($color-error, 0.1);
+  border: 1px solid rgba($color-error, 0.3);
+  border-radius: $radius-md;
+  padding: $space-3 $space-4;
+  font-size: 0.85rem;
+  color: $color-error;
+  margin-bottom: $space-4;
+  cursor: pointer;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// ── M6: Shopping list button ──────────────────────────────
+
+.contentHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-4;
+  margin-bottom: $space-6;
+  flex-wrap: wrap;
+
+  h2 {
+    font-family: $font-display;
+    font-size: 1.5rem;
+    margin: 0 0 $space-1;
+    color: $color-text;
+  }
+}
+
+.shoppingListBtn {
+  background: $color-surface-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text;
+  font-size: 0.875rem;
+  font-family: $font-body;
+  padding: $space-2 $space-4;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color $transition-fast, background $transition-fast;
+  flex-shrink: 0;
+
+  &:hover {
+    border-color: $color-accent;
+    background: rgba($color-accent, 0.06);
+  }
+}
+
+// ── M6: Shopping list modal ───────────────────────────────
+
+.shoppingSubheader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-3 $space-5;
+  background: $color-surface-2;
+  border-bottom: 1px solid $color-border;
+}
+
+.shoppingPlanName {
+  font-size: 0.85rem;
+  color: $color-text-muted;
+  font-style: italic;
+}
+
+.shoppingCount {
+  font-size: 0.78rem;
+  color: $color-text-muted;
+  background: $color-border;
+  padding: 2px 8px;
+  border-radius: $radius-full;
+}
+
+.shoppingList {
+  overflow-y: auto;
+  flex: 1;
+  padding: $space-2 0;
+}
+
+.shoppingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-3 $space-5;
+  gap: $space-4;
+  border-bottom: 1px solid $color-border;
+  transition: background $transition-fast;
+
+  &:last-child { border-bottom: none; }
+  &:hover { background: $color-surface-2; }
+}
+
+.shoppingItemName {
+  font-size: 0.9rem;
+  color: $color-text;
+  font-weight: 500;
+}
+
+.shoppingItemMeta {
+  font-size: 0.8rem;
+  color: $color-text-muted;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.shoppingCount2 {
+  background: rgba($color-accent, 0.12);
+  color: $color-accent;
+  padding: 1px 6px;
+  border-radius: $radius-full;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.shoppingFooter {
+  padding: $space-4 $space-5;
+  border-top: 1px solid $color-border;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.copyBtn {
+  background: $color-accent;
+  border: none;
+  border-radius: $radius-md;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: $font-body;
+  padding: $space-2 $space-5;
+  cursor: pointer;
+  transition: opacity $transition-fast;
+
+  &:hover:not(:disabled) { opacity: 0.88; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+// ── M6: Mobile Day View ───────────────────────────────────
+
+.mobileDayView {
+  @media (min-width: 768px) { display: none; }
+}
+
+.mobileDayNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $space-4;
+}
+
+.mobileDayNavBtn {
+  background: $color-surface-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text;
+  font-size: 1.1rem;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color $transition-fast;
+
+  &:hover:not(:disabled) { border-color: $color-accent; }
+  &:disabled { opacity: 0.35; cursor: not-allowed; }
+}
+
+.mobileDayTitle {
+  font-family: $font-display;
+  font-size: 1.25rem;
+  color: $color-text;
+  font-weight: 600;
+}
+
+.mobileDayDots {
+  display: flex;
+  justify-content: center;
+  gap: $space-2;
+  margin-bottom: $space-5;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $color-border;
+  transition: background $transition-fast;
+}
+
+.dotActive {
+  background: $color-accent;
+}
+
+.mobileMealList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.mobileMealRow {
+  background: $color-surface-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  overflow: hidden;
+}
+
+.mobileMealLabel {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-3 $space-4;
+  border-bottom: 1px solid $color-border;
+  background: rgba($color-border, 0.5);
+}
+
+.mobileMealType {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $color-text-muted;
+}
+
+.mobileMealFilled {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-3 $space-4;
+  gap: $space-3;
+}
+
+.mobileMealTitle {
+  font-size: 0.9rem;
+  color: $color-text;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.mobileRemoveBtn {
+  background: none;
+  border: none;
+  color: $color-text-muted;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: $space-1 $space-2;
+  border-radius: $radius-sm;
+  flex-shrink: 0;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover { color: $color-error; background: rgba($color-error, 0.1); }
+}
+
+.mobileAddBtn {
+  width: 100%;
+  background: none;
+  border: none;
+  color: $color-text-muted;
+  font-size: 0.875rem;
+  font-family: $font-body;
+  padding: $space-3 $space-4;
+  cursor: pointer;
+  text-align: left;
+  transition: color $transition-fast, background $transition-fast;
+
+  &:hover { color: $color-accent; background: rgba($color-accent, 0.05); }
+}
+
+// ── M6: Mobile responsive overrides ──────────────────────
+
+@media (max-width: $bp-sm) {
+  .main {
+    padding: $space-4;
+    gap: $space-4;
+  }
+
+  .content {
+    padding: $space-4;
+  }
+
+  .weekGrid {
+    display: none; // Hidden on mobile, MobileDayView takes over
+  }
+}

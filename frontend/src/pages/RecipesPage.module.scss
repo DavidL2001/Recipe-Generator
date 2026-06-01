@@ -1,0 +1,743 @@
+@use '../styles/variables' as *;
+
+// ── Page layout ──────────────────────────────────────────
+.page {
+  min-height: 100vh;
+  background: $color-bg;
+  color: $color-text;
+  font-family: $font-body;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-4 $space-8;
+  border-bottom: 1px solid $color-border;
+  background: $color-surface;
+
+  .logo {
+    font-family: $font-display;
+    font-size: 1.2rem;
+    color: $color-accent;
+  }
+
+  .nav {
+    display: flex;
+    gap: $space-3;
+    align-items: center;
+
+    a, button {
+      background: none;
+      border: none;
+      color: $color-text-muted;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: $space-2 $space-3;
+      border-radius: $radius-sm;
+      transition: color $transition-fast;
+      text-decoration: none;
+
+      &:hover { color: $color-text; }
+      &.active { color: $color-accent; }
+    }
+  }
+}
+
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: $space-8;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: $space-8;
+  align-items: start;
+
+  @media (max-width: $bp-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ── Generator panel ──────────────────────────────────────
+.generator {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: $space-6;
+  position: sticky;
+  top: $space-8;
+
+  h2 {
+    font-family: $font-display;
+    font-size: 1.3rem;
+    margin: 0 0 $space-5;
+    color: $color-text;
+  }
+}
+
+.label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $color-text-muted;
+  margin-bottom: $space-2;
+}
+
+.tagInput {
+  display: flex;
+  gap: $space-2;
+  margin-bottom: $space-3;
+
+  input {
+    flex: 1;
+    background: $color-surface-2;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    color: $color-text;
+    padding: $space-2 $space-3;
+    font-size: 0.9rem;
+    font-family: $font-body;
+
+    &::placeholder { color: $color-text-muted; }
+    &:focus { outline: none; border-color: $color-accent; }
+  }
+
+  button {
+    background: $color-surface-2;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    color: $color-accent;
+    padding: $space-2 $space-3;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background $transition-fast;
+
+    &:hover { background: $color-border; }
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-bottom: $space-5;
+  min-height: 30px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  background: rgba($color-accent, 0.15);
+  border: 1px solid rgba($color-accent, 0.3);
+  border-radius: $radius-full;
+  padding: 2px $space-3;
+  font-size: 0.82rem;
+  color: $color-accent;
+
+  button {
+    background: none;
+    border: none;
+    color: $color-accent;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    opacity: 0.7;
+    font-size: 0.9rem;
+
+    &:hover { opacity: 1; }
+  }
+}
+
+.select, .optionRow select {
+  width: 100%;
+  background: $color-surface-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text;
+  padding: $space-2 $space-3;
+  font-size: 0.9rem;
+  font-family: $font-body;
+  appearance: none;
+  margin-bottom: $space-4;
+  cursor: pointer;
+
+  &:focus { outline: none; border-color: $color-accent; }
+}
+
+.optionRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-3;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.generateBtn {
+  width: 100%;
+  background: $color-accent;
+  color: #fff;
+  border: none;
+  border-radius: $radius-md;
+  padding: $space-3;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: $font-body;
+  cursor: pointer;
+  transition: opacity $transition-fast, transform $transition-fast;
+  margin-top: $space-2;
+
+  &:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: $space-2;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// ── Recipe list ──────────────────────────────────────────
+.listSection {
+  h2 {
+    font-family: $font-display;
+    font-size: 1.4rem;
+    margin: 0 0 $space-5;
+    color: $color-text;
+  }
+}
+
+.filters {
+  display: flex;
+  gap: $space-3;
+  margin-bottom: $space-5;
+
+  button {
+    background: $color-surface;
+    border: 1px solid $color-border;
+    border-radius: $radius-full;
+    color: $color-text-muted;
+    padding: $space-2 $space-4;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover { border-color: $color-accent; color: $color-accent; }
+    &.activeFilter {
+      background: rgba($color-accent, 0.15);
+      border-color: $color-accent;
+      color: $color-accent;
+    }
+  }
+}
+
+.recipeGrid {
+  display: grid;
+  gap: $space-4;
+}
+
+.recipeCard {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: $space-5;
+  cursor: pointer;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    border-color: $color-accent;
+    box-shadow: $shadow-glow;
+  }
+
+  &.selected {
+    border-color: $color-accent;
+    box-shadow: $shadow-glow;
+  }
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $space-3;
+}
+
+.cardTitle {
+  font-family: $font-display;
+  font-size: 1.05rem;
+  margin: 0 0 $space-2;
+  color: $color-text;
+}
+
+.cardDesc {
+  font-size: 0.85rem;
+  color: $color-text-muted;
+  margin: 0 0 $space-3;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  font-size: 0.8rem;
+  color: $color-text-muted;
+
+  span { display: flex; align-items: center; gap: 4px; }
+}
+
+.diffBadge {
+  padding: 2px $space-2;
+  border-radius: $radius-sm;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  &.easy   { background: rgba($color-success, 0.15); color: $color-success; }
+  &.medium { background: rgba($color-warning, 0.15); color: $color-warning; }
+  &.hard   { background: rgba($color-error, 0.15);   color: $color-error; }
+}
+
+.favBtn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity $transition-fast, transform $transition-fast;
+
+  &:hover { opacity: 1; transform: scale(1.2); }
+  &.favorited { opacity: 1; }
+}
+
+// ── Detail panel ─────────────────────────────────────────
+.detail {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: $space-6;
+  margin-top: $space-6;
+}
+
+.detailHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $space-4;
+  gap: $space-4;
+
+  h3 {
+    font-family: $font-display;
+    font-size: 1.4rem;
+    margin: 0;
+    color: $color-text;
+  }
+
+  .closeBtn {
+    background: none;
+    border: none;
+    color: $color-text-muted;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
+
+    &:hover { color: $color-text; }
+  }
+}
+
+.detailMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+  margin-bottom: $space-5;
+  font-size: 0.85rem;
+  color: $color-text-muted;
+
+  span { display: flex; align-items: center; gap: 4px; }
+}
+
+.detailSection {
+  margin-bottom: $space-5;
+
+  h4 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $color-text-muted;
+    margin: 0 0 $space-3;
+    padding-bottom: $space-2;
+    border-bottom: 1px solid $color-border;
+  }
+}
+
+.ingredientList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: $space-2;
+
+  li {
+    font-size: 0.9rem;
+    color: $color-text;
+    padding: $space-2 $space-3;
+    background: $color-surface-2;
+    border-radius: $radius-sm;
+
+    span { color: $color-text-muted; font-size: 0.82rem; }
+  }
+}
+
+.instructionList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  li {
+    display: flex;
+    gap: $space-3;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: $color-text;
+
+    .stepNum {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      background: rgba($color-accent, 0.15);
+      color: $color-accent;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+  }
+}
+
+.nutritionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: $space-3;
+
+  .nutItem {
+    background: $color-surface-2;
+    border-radius: $radius-md;
+    padding: $space-3;
+    text-align: center;
+
+    .nutValue {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: $color-accent;
+      font-family: $font-mono;
+    }
+
+    .nutLabel {
+      font-size: 0.75rem;
+      color: $color-text-muted;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+  }
+}
+
+.deleteBtn {
+  background: none;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-error;
+  padding: $space-2 $space-4;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    background: rgba($color-error, 0.1);
+    border-color: $color-error;
+  }
+}
+
+// ── Empty / Loading states ───────────────────────────────
+.empty {
+  text-align: center;
+  padding: $space-12 0;
+  color: $color-text-muted;
+
+  .emptyIcon { font-size: 3rem; margin-bottom: $space-4; }
+  p { font-size: 0.95rem; }
+}
+
+.loadingRow {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-8 0;
+  color: $color-text-muted;
+  font-size: 0.9rem;
+
+  .loadSpinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid $color-border;
+    border-top-color: $color-accent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+}
+
+.generatingBanner {
+  background: rgba($color-accent, 0.08);
+  border: 1px solid rgba($color-accent, 0.25);
+  border-radius: $radius-md;
+  padding: $space-4;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  font-size: 0.9rem;
+  color: $color-accent;
+  margin-bottom: $space-5;
+}
+
+.errorBanner {
+  background: rgba($color-error, 0.1);
+  border: 1px solid rgba($color-error, 0.3);
+  border-radius: $radius-md;
+  padding: $space-3 $space-4;
+  font-size: 0.85rem;
+  color: $color-error;
+  margin-bottom: $space-4;
+  cursor: pointer;
+}
+
+// ── M5: Search ────────────────────────────────────────────
+
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: $space-4;
+  margin-bottom: $space-5;
+
+  h2 { margin: 0; }
+}
+
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+
+  .searchIcon {
+    position: absolute;
+    left: $space-3;
+    font-size: 0.9rem;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
+.searchInput {
+  background: $color-surface-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-full;
+  color: $color-text;
+  padding: $space-2 $space-8 $space-2 $space-8;
+  font-size: 0.88rem;
+  font-family: $font-body;
+  width: 220px;
+  transition: border-color $transition-fast, width $transition-normal;
+
+  &::placeholder { color: $color-text-muted; }
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    width: 280px;
+  }
+}
+
+.clearSearch {
+  position: absolute;
+  right: $space-3;
+  background: none;
+  border: none;
+  color: $color-text-muted;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+
+  &:hover { color: $color-text; }
+}
+
+// ── M5: Tag filters ───────────────────────────────────────
+
+.filtersRow {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  margin-bottom: $space-5;
+}
+
+.tagFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.tagFilterChip {
+  background: $color-surface-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-full;
+  color: $color-text-muted;
+  padding: 2px $space-3;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all $transition-fast;
+  font-family: $font-body;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+
+  &.activeTagFilter {
+    background: rgba($color-accent, 0.15);
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+}
+
+// tagChip — used in both detail view and card
+.tagChip {
+  display: inline-block;
+  background: $color-surface-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-full;
+  color: $color-text-muted;
+  padding: 2px $space-3;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all $transition-fast;
+  font-family: $font-body;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+}
+
+.detailTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-bottom: $space-5;
+}
+
+.cardTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-top: $space-3;
+}
+
+.noResultsBanner {
+  background: rgba($color-warning, 0.08);
+  border: 1px solid rgba($color-warning, 0.25);
+  border-radius: $radius-md;
+  padding: $space-3 $space-4;
+  font-size: 0.88rem;
+  color: $color-text-muted;
+  margin-bottom: $space-5;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.clearFiltersBtn {
+  background: none;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-accent;
+  padding: 2px $space-3;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all $transition-fast;
+  font-family: $font-body;
+
+  &:hover { border-color: $color-accent; }
+}
+
+// ── M6: Mobile overrides ──────────────────────────────────
+
+@media (max-width: $bp-sm) {
+  .main {
+    padding: $space-4;
+    gap: $space-4;
+  }
+
+  .generator {
+    position: static; // Remove sticky on mobile
+  }
+}
+
+// ── Collapsible section toggle ─────────────────────────
+.sectionToggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+
+  h4 {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+}
+
+.toggleIcon {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  transition: transform 0.15s ease;
+}

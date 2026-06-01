@@ -1,0 +1,167 @@
+@use '../styles/variables' as *;
+
+.authPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-bg;
+  padding: $space-4;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  padding: $space-10 $space-8;
+  box-shadow: $shadow-lg, $shadow-glow;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: $space-8;
+}
+
+.logo {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: $space-4;
+}
+
+.title {
+  font-family: $font-display;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $color-text;
+  margin: 0 0 $space-2;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.errorBanner {
+  background: rgba($color-error, 0.12);
+  border: 1px solid rgba($color-error, 0.3);
+  color: lighten($color-error, 15%);
+  border-radius: $radius-md;
+  padding: $space-3 $space-4;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: $color-text-muted;
+  letter-spacing: 0.02em;
+}
+
+.input {
+  background: $color-surface-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text;
+  font-family: $font-body;
+  font-size: 0.95rem;
+  padding: $space-3 $space-4;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+  width: 100%;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: darken($color-text-muted, 20%);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 3px rgba($color-accent, 0.15);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.submitBtn {
+  margin-top: $space-2;
+  background: $color-accent;
+  border: none;
+  border-radius: $radius-md;
+  color: #1a0f06;
+  cursor: pointer;
+  font-family: $font-body;
+  font-size: 0.95rem;
+  font-weight: 600;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background $transition-fast, transform $transition-fast,
+    box-shadow $transition-fast;
+
+  &:hover:not(:disabled) {
+    background: lighten($color-accent, 8%);
+    box-shadow: 0 4px 16px rgba($color-accent, 0.3);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(#1a0f06, 0.3);
+  border-top-color: #1a0f06;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.switchAuth {
+  margin-top: $space-6;
+  text-align: center;
+  font-size: 0.875rem;
+  color: $color-text-muted;
+}
+
+.link {
+  color: $color-accent;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: lighten($color-accent, 10%);
+    text-decoration: underline;
+  }
+}
